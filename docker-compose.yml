@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: maquetador-dulces:latest
+    container_name: maquetador-dulces
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

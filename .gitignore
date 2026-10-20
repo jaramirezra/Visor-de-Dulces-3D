@@ -1,0 +1,14 @@
+node_modules
+dist
+.vite
+
+# Entorno / credenciales
+.env
+.env.*
+!.env.example
+
+*.local
+*.log
+npm-debug.log*
+yarn-error.log*
+.DS_Store
