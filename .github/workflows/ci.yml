@@ -35,9 +35,8 @@ jobs:
         run: npm run build
 
   docker:
-    name: Publish image to GHCR
+    name: Docker image
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -55,6 +54,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -71,12 +71,13 @@ jobs:
             type=sha,format=short
             type=ref,event=branch
 
+      # En PRs solo se construye (sin publicar) para validar el Dockerfile
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
