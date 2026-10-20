@@ -61,6 +61,31 @@ docker compose down
 > el puerto (por ejemplo de `8080` a `3000`), el navegador lo considera otro origen y
 > los diseños guardados no aparecerán. Usa siempre el mismo puerto.
 
+### Imagen publicada (GHCR)
+
+Cada push a `main` que pasa las verificaciones publica la imagen en
+`ghcr.io/jaramirezra/visor-de-dulces-3d` con los tags `latest`, `main` y `sha-<corto>`.
+El paquete es privado por defecto: para descargarlo sin autenticarte, cámbialo a
+público en *Packages → Package settings → Change visibility*.
+
+```bash
+docker pull ghcr.io/jaramirezra/visor-de-dulces-3d:latest
+docker compose -f docker-compose.prod.yml up -d
+```
+
+`docker-compose.prod.yml` solo descarga y arranca la imagen (no compila), así que sirve
+para desplegar en un servidor sin Node ni `node_modules`.
+
+### Integración continua
+
+`.github/workflows/ci.yml` ejecuta en cada push y PR a `main`:
+
+1. `npm ci` y `npm run build` (typecheck con `tsc` incluido).
+2. Solo en `main`: construcción y publicación de la imagen Docker en GHCR.
+
+Las dependencias las actualiza Dependabot semanalmente (`.github/dependabot.yml`); sus
+PRs pasan por el mismo workflow.
+
 ## Cómo se usa
 
 1. Elige la forma del dulce en la barra izquierda.

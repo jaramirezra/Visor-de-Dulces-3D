@@ -1,0 +1,13 @@
+# Despliegue con la imagen ya construida por CI (GitHub Container Registry).
+# No compila nada en el servidor: solo descarga y arranca.
+#
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# El HEALTHCHECK viene definido en la propia imagen, no hace falta repetirlo aquí.
+services:
+  app:
+    image: ghcr.io/jaramirezra/visor-de-dulces-3d:latest
+    container_name: visor-dulces
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

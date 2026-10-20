@@ -1,0 +1,44 @@
+version: 2
+
+updates:
+  # Dependencias de la aplicación
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      react-three:
+        patterns:
+          - "three"
+          - "@types/three"
+          - "@react-three/*"
+      tooling:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "typescript"
+          - "@types/react"
+          - "@types/react-dom"
+        update-types:
+          - minor
+          - patch
+
+  # Acciones usadas por el workflow
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  # Imágenes base del Dockerfile
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(docker)"
