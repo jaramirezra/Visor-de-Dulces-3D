@@ -42,3 +42,8 @@ updates:
       interval: monthly
     commit-message:
       prefix: "chore(docker)"
+    ignore:
+      # Se fija Node 24 (LTS activo) y solo se aceptan parches dentro de esa major
+      - dependency-name: node
+        update-types:
+          - version-update:semver-major
