@@ -48,8 +48,8 @@ docker compose up --build
 
 Abre `http://localhost:8080`.
 
-La imagen es multi-etapa: Node compila y Nginx (sin privilegios) sirve el resultado.
-Pesa mucho menos que una imagen con Node en producción y arranca en segundos.
+La imagen es multi-etapa: Node 24 (LTS) compila y Nginx (sin privilegios) sirve el
+resultado. Pesa mucho menos que una imagen con Node en producción y arranca en segundos.
 
 Para parar el contenedor:
 
